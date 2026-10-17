@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#5b21b6">
+<title>COMRADE CYBER | Online Services Portal</title>
+<style>
+:root{--purple:#5b21b6;--deep:#32106d;--lav:#f4efff;--ink:#211638;--muted:#6b6479;--line:#e5ddf2;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#faf8ff;color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{background:var(--deep);color:white;padding:8px 5%;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}.top a{color:#fff}
+.nav{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.navin{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;color:var(--deep);font-size:19px}
+.logo{width:48px;height:48px;border-radius:13px;object-fit:contain;background:#fff;border:1px solid var(--line);padding:3px}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:750;background:var(--purple);color:white}.btn:hover{filter:brightness(.95)}.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn.alt{background:#efe7ff;color:var(--deep)}.btn.outline{background:white;color:var(--purple);border:1px solid #c9b8ed}.btn.danger{background:#b42318}
+.wrap{max-width:1180px;margin:auto;padding:24px 20px}
+.hero{background:linear-gradient(120deg,#32106d,#6d28d9 65%,#8b5cf6);color:white;border-radius:24px;padding:clamp(24px,5vw,55px);display:grid;grid-template-columns:1.4fr .8fr;gap:25px;align-items:center;box-shadow:0 14px 36px #4c1d951a}
+.hero h1{font-size:clamp(30px,4.4vw,49px);line-height:1.08;margin:10px 0 15px}.hero p{color:#eee5ff;max-width:650px}
+.hero .btn{background:white;color:var(--deep)}
+.hero-card{background:#ffffff16;border:1px solid #ffffff36;border-radius:18px;padding:22px}.hero-card strong{font-size:22px}
+.search{width:100%;border:1px solid var(--line);padding:13px 15px;border-radius:12px;background:white}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:30px 0 14px}.section-head h2{margin:0;font-size:25px}
+.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:0 5px 20px #2e106b06}
+.service .emoji{font-size:26px}.service h3{margin:8px 0 5px}.service p{color:var(--muted);font-size:14px;min-height:42px}.service .btn{width:100%;margin-top:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{border:1px solid #d9c9f6;background:white;border-radius:999px;padding:7px 12px;color:var(--deep);font-weight:650}
+.chip.active{background:var(--purple);color:white}
+.panel{display:none;margin-top:25px}.panel.active{display:block}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{font-weight:700;font-size:13px}
+.field input,.field select,.field textarea{border:1px solid #d9d1e8;border-radius:10px;padding:11px 12px;background:white;width:100%}
+.field textarea{min-height:100px;resize:vertical}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.status{display:inline-block;border-radius:999px;padding:4px 9px;background:#efe7ff;color:#4c1d95;font-size:12px;font-weight:800}
+.status.pending{background:#fef3c7;color:#92400e}
+.status.done{background:#dcfce7;color:#166534}
+.rowline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hidden{display:none!important}
+.notice{padding:12px 14px;border-radius:10px;background:#f0eaff;color:#3d176d;margin:12px 0}
+.notice.error{background:#fee2e2;color:#991b1b}.notice.ok{background:#dcfce7;color:#166534}
+footer{background:#21103f;color:#eee5ff;margin-top:35px;padding:28px 20px}
+footer .footin{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.wa{position:fixed;bottom:20px;right:20px;background:#128c4a;color:white;border-radius:999px;padding:13px 17px;text-decoration:none;font-weight:800;box-shadow:0 8px 25px #0002;z-index:15}
+.small{font-size:12px}.divider{height:1px;background:var(--line);margin:18px 0}.empty{text-align:center;padding:25px;color:var(--muted)}
+.request-item{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#fcfaff}
+.request-item .meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.admin-table th,.admin-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.admin-table th{background:#f0eaff;color:var(--deep);font-weight:750}
+.admin-table tr:nth-child(even){background:#fcfaff}
+.admin-badge{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:800}
+.admin-login-wrap{max-width:460px;margin:0 auto}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.navin{align-items:flex-start;flex-direction:column}.admin-table{font-size:12px}}
+@media(max-width:560px){.grid,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.top{font-size:12px}.section-head{align-items:flex-start;flex-direction:column}.hero{border-radius:17px}.wrap{padding:18px 13px}}
+</style>
+</head>
+<body>
+<div class="top"><span>📍 Alupe, Busia, Kenya · Independent private online services</span><span>☎ <a href="tel:+254746617371">0746 617 371</a> · ✉ <a href="mailto:corneliusotwori5@gmail.com">corneliusotwori5@gmail.com</a></span></div>
+<header class="nav"><div class="navin">
+  <div class="brand"><img class="logo" src="assets/logo.png" alt="COMRADE CYBER logo" onerror="this.style.display='none'"><span>COMRADE <span style="color:#7c3aed">CYBER</span><small style="display:block;font-size:11px;color:#6b6479;font-weight:600;letter-spacing:1px">ONLINE SERVICES PORTAL</small></span></div>
+  <div class="navlinks">
+    <button type="button" class="btn alt" onclick="showSection('services')">Services</button>
+    <button type="button" class="btn alt" onclick="showSection('request')">Request Service</button>
+    <button type="button" class="btn alt" onclick="showSection('dashboard')">My Dashboard</button>
+    <button type="button" class="btn outline" onclick="showSection('admin')">🛡️ Admin Panel</button>
+    <span id="userChip" class="small muted hidden" style="align-self:center;padding:0 6px"></span>
+    <button type="button" class="btn hidden" id="loginLink" onclick="goToLogin()">Login / Register</button>
+    <button type="button" class="btn danger hidden" id="logoutBtn" onclick="logout()">Sign out</button>
+  </div>
+</div></header>
+<main class="wrap">
+<section class="hero"><div><span class="status">YOUR DIGITAL SERVICE PARTNER</span><h1>Online services, made simpler.</h1><p>Request assistance with government and education portals, document services, job applications, business services, graphic design and technology.</p><div class="tabs"><button type="button" class="btn" onclick="showSection('services')">Explore services →</button><button type="button" class="btn alt" onclick="showSection('request')">Make a request</button></div></div><div class="hero-card"><strong>How it works</strong><p>1. Create an account or sign in.</p><p>2. Choose a service and share the details we need.</p><p>3. We receive your request instantly by email.</p><div class="divider" style="background:#ffffff3d"></div><span class="small">Need help? Contact us on WhatsApp.</span></div></section>
+
+<section id="services" class="panel active"><div class="section-head"><div><h2>Explore our services</h2><div class="muted">Choose a category or search for a service.</div></div></div><input class="search" id="search" placeholder="Search services, e.g. HELB, KRA, CV, printing..." oninput="renderServices()"><div class="chips" id="categoryChips"></div><div class="grid" id="serviceGrid"></div></section>
+
+<section id="request" class="panel"><div class="section-head"><div><h2>Request a service</h2><div class="muted">Sign in first to submit your request securely.</div></div></div><div class="card"><div id="requestAuthNotice" class="notice">Please sign in or register to submit a request.</div><form id="requestForm"><div class="formgrid"><div class="field"><label for="serviceSelect">Service *</label><select id="serviceSelect" required></select></div><div class="field"><label for="customerPhone">Contact phone *</label><input id="customerPhone" required placeholder="07xx xxx xxx"></div><div class="field full"><label for="requestDetails">Describe what you need *</label><textarea id="requestDetails" required placeholder="Provide the service details. Do not enter passwords, OTPs, PINs or banking credentials."></textarea></div><div class="field full"><label for="requestFile">Attach a document (optional)</label><input type="file" id="requestFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.txt"><span class="small muted">Only upload files needed for your request. Max 8 MB.</span></div></div><div style="margin-top:15px"><button type="submit" class="btn">Submit service request</button></div><div id="requestMessage"></div></form></div></section>
+
+<section id="dashboard" class="panel"><div class="section-head"><div><h2>My dashboard</h2><div class="muted">Your profile and service requests.</div></div><button type="button" class="btn outline" onclick="loadDashboard()">Refresh</button></div><div id="dashboardNotice" class="notice">Please sign in to view your dashboard.</div><div id="dashboardContent" class="hidden"><div class="card"><h3>My profile</h3><form id="profileForm" class="formgrid"><div class="field"><label>Full name</label><input id="profileName" required></div><div class="field"><label>Phone</label><input id="profilePhone" required></div><div class="field"><label>Email</label><input id="profileEmail" disabled></div><div class="field" style="justify-content:end"><button type="submit" class="btn">Save profile</button></div></form><div id="profileMessage"></div></div><div class="card" style="margin-top:20px"><h3>My service requests</h3><div id="requestsList"><div class="empty">Loading requests…</div></div></div></div></section>
+
+<!-- ==================== ADMIN PANEL (own top-level tab) ==================== -->
+<section id="admin" class="panel">
+  <div class="section-head">
+    <div><h2>🛡️ Admin Panel</h2><div class="muted">Restricted area. Authorized administrators only.</div></div>
+  </div>
+
+  <!-- LOGIN VIEW -->
+  <div id="adminLoginBox" class="card admin-login-wrap">
+    <h3>Admin Login</h3>
+    <p class="small muted">Enter the administrator credentials. Only one admin email and password exist at a time.</p>
+    <form id="adminLoginForm">
+      <div class="field"><label>Admin Email</label><input type="email" id="adminEmail" required placeholder="admin@example.com"></div>
+      <div class="field" style="margin-top:10px"><label>Admin Password</label><input type="password" id="adminPassword" required placeholder="••••••••"></div>
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button type="submit" class="btn">Login as Admin</button>
+        <button type="button" class="btn outline" id="adminSetupBtn" onclick="adminSetup()">Set Admin (first time)</button>
+      </div>
+      <div id="adminLoginMsg"></div>
+    </form>
+  </div>
+
+  <!-- ADMIN CONTENT -->
+  <div id="adminContent" class="hidden">
+    <div class="card" style="background:#f0fdf4;border-color:#bbf7d0">
+      <div class="rowline">
+        <div><span class="admin-badge">✓ ADMIN SESSION ACTIVE</span> <span class="small muted" id="adminSessionInfo"></span></div>
+        <button type="button" class="btn danger" onclick="adminLogout()">Log out of Admin Panel</button>
+      </div>
+    </div>
+
+    <!-- CREDENTIALS MANAGER -->
+    <div class="card" style="margin-top:16px">
+      <h3>🔑 Admin Credentials</h3>
+      <p class="small muted">Only one admin email and password can exist at a time. Saving replaces the current credentials.</p>
+      <form id="adminCredsForm" class="formgrid">
+        <div class="field"><label>New Admin Email</label><input type="email" id="newAdminEmail" required></div>
+        <div class="field"><label>New Admin Password</label><input type="password" id="newAdminPassword" required minlength="6"></div>
+        <div class="field full"><button type="submit" class="btn">Update Admin Credentials</button></div>
+      </form>
+      <div id="adminCredsMsg"></div>
+    </div>
+
+    <!-- SUBMITTED WORKS -->
+    <div class="card" style="margin-top:16px">
+      <div class="rowline">
+        <h3>📥 All Submitted Works (Client Requests)</h3>
+        <span class="small muted" id="adminReqCount"></span>
+      </div>
+      <input class="search" id="adminSearch" placeholder="Search by name, email, service, reference…" oninput="renderAdminRequests()" style="margin:12px 0">
+      <div id="adminRequestsList"><div class="empty">Loading requests…</div></div>
+    </div>
+
+    <!-- PROFILES -->
+    <div class="card" style="margin-top:16px">
+      <h3>👥 Registered Clients</h3>
+      <div id="adminProfilesList"><div class="empty">Loading…</div></div>
+    </div>
+  </div>
+</section>
+<!-- ================== END ADMIN PANEL ================== -->
+
+<section class="card" style="margin-top:30px"><h2>Important information</h2><p class="muted">COMRADE CYBER is an independent private business. Not affiliated with Huduma Kenya, HELB, or the Government of Kenya.</p><p class="small muted">Never send passwords, OTPs, bank details or PINs through this portal.</p></section>
+</main>
+<footer><div class="footin"><div><strong>COMRADE CYBER</strong><div class="small">Online services · Education · Documents · Design · Technology</div></div><div><div>📍 Alupe, Busia, Kenya</div><div>☎ 0746 617 371</div><div>✉ corneliusotwori5@gmail.com</div></div><div class="small">© <span id="year"></span> COMRADE CYBER. All rights reserved.</div></div></footer>
+<a class="wa" id="waLink" href="https://wa.me/254746617371?text=Hello%20COMRADE%20CYBER" target="_blank" rel="noopener">WhatsApp us</a>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+
+const SUPABASE_URL      = "https://vebfwxpacvzcnsflulrg.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_IFrnG1B_XQ_DW2EwlH2Qig_ocV1H6ft";
+
+/* Replace with your Render URL */
+const API_URL = "https://comrade-site.onrender.com";
+
+const WHATSAPP_NUMBER = "254746617371";
+const BUCKET = "request-files";
+const LOGIN_PAGE = "login.html";
+const ADMIN_TABLE = "admin_credentials";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+let currentUser = null, selectedCategory = "All";
+let adminSession = null;
+let adminAllRequests = [];
+
+const services = [
+["Government & Online","🪪","KRA PIN application and returns","KRA email recovery/change assistance","Good conduct application guidance","Passport application guidance","SHA registration and beneficiaries","NSSF registration and services","Other government online services"],
+["Education","🎓","HELB application assistance","KUCCPS placement guidance","KASNEB CPA and course registration","TSC number application guidance","Online course applications","Research proposals and project editing"],
+["Jobs & Applications","💼","CV and cover letter preparation","Online job applications","Application letter typing","Scholarship applications","Internship applications"],
+["Document Services","🖨️","Typing and document formatting","Printing and photocopying","Scanning documents","Editing and proofreading","Binding and finishing","Passport-size photo preparation"],
+["Business Services","📊","Business document preparation","Online business applications","Spreadsheet and data entry","Professional document design","Basic bookkeeping templates"],
+["Creative & Technology","💻","Graphic design","Website development","Computer and IT assistance","Email and account setup guidance","Browsing and online form assistance"]
+];
+const allServices = services.flatMap(([cat,emoji,...names]) => names.map(name => ({cat, emoji, name})));
+
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function notice(id,msg,type=""){const el=$(id);if(el){el.className="notice"+(type?" "+type:"");el.textContent=msg;}}
+
+window.goToLogin = () => { window.location.href = LOGIN_PAGE; };
+
+/* SHA-256 hash for admin password storage */
+async function sha256(text){
+  const buf = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+/* Auth state */
+supabase.auth.onAuthStateChange((_evt, session) => {
+  const user = session?.user ?? null;
+  setTimeout(() => handleAuth(user), 0);
+});
+
+async function handleAuth(user){
+  currentUser = user;
+  $("loginLink").classList.toggle("hidden", !!user);
+  $("logoutBtn").classList.toggle("hidden", !user);
+  $("userChip").classList.toggle("hidden", !user);
+  if(user){
+    $("userChip").textContent = `👤 ${user.user_metadata?.name || user.email}`;
+    $("requestAuthNotice").textContent = `Signed in as ${user.email}.`;
+    try{ await ensureProfile(user); }catch(e){ console.warn(e.message); }
+  }else{
+    $("requestAuthNotice").textContent = "Please sign in or register to submit a request.";
+  }
+}
+
+async function ensureProfile(user){
+  const { data: prof } = await supabase.from("profiles").select("id").eq("id", user.id).maybeSingle();
+  if(!prof){
+    await supabase.from("profiles").insert({
+      id: user.id,
+      name: user.user_metadata?.name ?? "",
+      phone: user.user_metadata?.phone ?? "",
+      email: user.email ?? ""
+    });
+  }
+}
+
+window.showSection = function(id){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  $(id)?.classList.add("active");
+  if(id==="dashboard") loadDashboard();
+  if(id==="admin") refreshAdminUI();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+window.logout = async () => {
+  await supabase.auth.signOut();
+  window.location.href = LOGIN_PAGE;
+};
+
+/* Services */
+function buildChips(){
+  const cats=["All",...services.map(s=>s[0])];
+  $("categoryChips").innerHTML=cats.map(c=>`<button type="button" class="chip ${c===selectedCategory?"active":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+  $("categoryChips").querySelectorAll("button").forEach(b=>b.onclick=()=>{selectedCategory=b.dataset.cat;buildChips();renderServices();});
+}
+window.renderServices = function(){
+  const term=($("search").value||"").toLowerCase();
+  const list=allServices.filter(s=>(selectedCategory==="All"||s.cat===selectedCategory)&&(s.name.toLowerCase().includes(term)||s.cat.toLowerCase().includes(term)));
+  $("serviceGrid").innerHTML=list.map(s=>`<article class="card service"><div class="emoji">${s.emoji}</div><div class="small muted">${esc(s.cat)}</div><h3>${esc(s.name)}</h3><p>Request support from COMRADE CYBER. We will receive your request instantly.</p><button type="button" class="btn" data-service="${esc(s.name)}">Request this service</button></article>`).join("")||'<div class="empty">No matching services found.</div>';
+  document.querySelectorAll("[data-service]").forEach(b=>b.onclick=()=>{ $("serviceSelect").value=b.dataset.service; showSection("request"); });
+};
+function buildServiceSelect(){
+  $("serviceSelect").innerHTML='<option value="">Select a service</option>'+allServices.map(s=>`<option>${esc(s.name)}</option>`).join("");
+}
+
+/* Request submit — sends email via Render + Supabase logging */
+$("requestForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn = e.target.querySelector("button[type=submit]");
+  try{
+    if(!currentUser){
+      notice("requestMessage","Please sign in first. Redirecting…","error");
+      setTimeout(()=>window.location.href = LOGIN_PAGE, 1200);
+      return;
+    }
+    const service = $("serviceSelect").value;
+    const phone   = $("customerPhone").value.trim();
+    const details = $("requestDetails").value.trim();
+    const file    = $("requestFile").files[0];
+    if(!service || !details || !phone) throw new Error("Complete all required fields.");
+    if(file && file.size > 8*1024*1024) throw new Error("File exceeds 8 MB.");
+
+    if(btn){ btn.disabled = true; btn.textContent = "Submitting…"; }
+
+    let fileUrl = "", fileName = "";
+    if(file){
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+      const path = `${currentUser.id}/${Date.now()}-${safeName}`;
+      const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { cacheControl:"3600", upsert:false });
+      if(upErr) throw upErr;
+      const { data: pub } = supabase.storage.from(BUCKET).getPublicUrl(path);
+      fileUrl = pub.publicUrl;
+      fileName = file.name;
+    }
+
+    const refNo = "CC-" + Date.now().toString(36).toUpperCase();
+    const res = await fetch(`${API_URL}/api/send-request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        refNo,
+        userName: currentUser.user_metadata?.name || "",
+        userEmail: currentUser.email,
+        phone, service, details, fileUrl, fileName,
+        userId: currentUser.id
+      })
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || `Server error (${res.status})`);
+
+    /* Insert request record into Supabase for status tracking */
+    await supabase.from("requests").insert({
+      ref_no: refNo,
+      user_id: currentUser.id,
+      user_email: currentUser.email,
+      user_name: currentUser.user_metadata?.name || "",
+      phone, service, details, file_url: fileUrl, file_name: fileName,
+      status: "pending"
+    });
+
+    $("waLink").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      `Hello COMRADE CYBER, I submitted request ${refNo} for ${service}. Phone: ${phone}.`
+    )}`;
+
+    notice("requestMessage", `✅ Request sent successfully. Reference: ${refNo}. We will respond shortly.`, "ok");
+    e.target.reset();
+  }catch(err){
+    notice("requestMessage", err.message, "error");
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = "Submit service request"; }
+  }
+});
+
+/* Profile */
+$("profileForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn = e.target.querySelector("button[type=submit]");
+  try{
+    if(!currentUser) throw new Error("Sign in first.");
+    if(btn){ btn.disabled = true; btn.textContent = "Saving…"; }
+    const name = $("profileName").value.trim();
+    const phone = $("profilePhone").value.trim();
+    const { error } = await supabase.from("profiles").upsert({
+      id: currentUser.id, name, phone,
+      email: currentUser.email,
+      updated_at: new Date().toISOString()
+    });
+    if(error) throw error;
+    await supabase.auth.updateUser({ data: { name, phone } });
+    notice("profileMessage","Profile saved.","ok");
+  }catch(err){
+    notice("profileMessage", err.message, "error");
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = "Save profile"; }
+  }
+});
+
+/* Dashboard with request tracking */
+window.loadDashboard = async () => {
+  if(!currentUser){
+    notice("dashboardNotice","Please sign in to view your dashboard.");
+    $("dashboardContent").classList.add("hidden");
+    return;
+  }
+  try{
+    $("dashboardContent").classList.remove("hidden");
+    notice("dashboardNotice", `Welcome, ${currentUser.user_metadata?.name || currentUser.email}.`);
+    const { data: prof } = await supabase.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
+    $("profileName").value  = prof?.name  || currentUser.user_metadata?.name || "";
+    $("profilePhone").value = prof?.phone || currentUser.user_metadata?.phone || "";
+    $("profileEmail").value = currentUser.email || "";
+
+    const { data: reqs, error } = await supabase
+      .from("requests")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", { ascending: false });
+    if(error) throw error;
+
+    if(!reqs || !reqs.length){
+      $("requestsList").innerHTML = '<div class="empty">You have not submitted any requests yet.</div>';
+      return;
+    }
+    $("requestsList").innerHTML = reqs.map(r=>`
+      <div class="request-item">
+        <div class="rowline">
+          <strong>${esc(r.service || "Service request")}</strong>
+          <span class="status ${r.status==="pending"?"pending":r.status==="done"?"done":""}">${esc(r.status || "pending")}</span>
+        </div>
+        <div class="meta">
+          <span>Ref: ${esc(r.ref_no || "-")}</span>
+          <span>Phone: ${esc(r.phone || "-")}</span>
+          <span>${r.created_at ? new Date(r.created_at).toLocaleString() : ""}</span>
+        </div>
+        <p style="margin:8px 0 0">${esc(r.details || "")}</p>
+        ${r.file_url ? `<p style="margin:6px 0 0"><a href="${esc(r.file_url)}" target="_blank" rel="noopener">📎 ${esc(r.file_name || "Attachment")}</a></p>` : ""}
+      </div>
+    `).join("");
+  }catch(err){
+    notice("dashboardNotice", err.message, "error");
+    $("requestsList").innerHTML = `<div class="empty">Could not load requests: ${esc(err.message)}</div>`;
+  }
+};
+
+/* ==================== ADMIN PANEL LOGIC (Supabase-only) ==================== */
+
+async function adminExists(){
+  try{
+    const { data, error } = await supabase.from(ADMIN_TABLE).select("email").limit(1);
+    if(error) throw error;
+    return !!(data && data.length);
+  }catch(e){
+    console.warn("admin_credentials read failed:", e.message);
+    return false;
+  }
+}
+
+async function refreshAdminUI(){
+  const exists = await adminExists();
+  $("adminSetupBtn").classList.toggle("hidden", exists);
+
+  const saved = sessionStorage.getItem("cc_admin");
+  if(saved){
+    try{ adminSession = JSON.parse(saved); }catch(e){ adminSession = null; }
+  }
+
+  if(adminSession){
+    $("adminLoginBox").classList.add("hidden");
+    $("adminContent").classList.remove("hidden");
+    $("adminSessionInfo").textContent = `Signed in as ${adminSession.email}`;
+    await adminLoadRequests();
+    await adminLoadProfiles();
+  }else{
+    $("adminLoginBox").classList.remove("hidden");
+    $("adminContent").classList.add("hidden");
+  }
+}
+
+/* First-time setup */
+window.adminSetup = async function(){
+  try{
+    const exists = await adminExists();
+    if(exists){ alert("An admin already exists. Please log in instead."); return; }
+    const email = prompt("Set the ADMIN EMAIL:");
+    if(!email) return;
+    const pass = prompt("Set the ADMIN PASSWORD (min 6 characters):");
+    if(!pass || pass.length < 6){ alert("Password must be at least 6 characters."); return; }
+    const hash = await sha256(pass);
+    const { error } = await supabase.from(ADMIN_TABLE).insert({
+      email: email.trim().toLowerCase(),
+      password_hash: hash
+    });
+    if(error) throw error;
+    alert("✅ Admin created. You can now log in.");
+    await refreshAdminUI();
+  }catch(err){
+    alert("Could not create admin: " + err.message);
+  }
+};
+
+/* Admin login */
+$("adminLoginForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn = e.target.querySelector("button[type=submit]");
+  try{
+    if(btn){ btn.disabled = true; btn.textContent = "Verifying…"; }
+    const email = $("adminEmail").value.trim().toLowerCase();
+    const pass  = $("adminPassword").value;
+    const hash  = await sha256(pass);
+
+    const { data, error } = await supabase
+      .from(ADMIN_TABLE)
+      .select("email,password_hash")
+      .eq("email", email)
+      .maybeSingle();
+    if(error) throw error;
+    if(!data) throw new Error("Invalid admin credentials.");
+    if(data.password_hash !== hash) throw new Error("Invalid admin credentials.");
+
+    adminSession = { email: data.email, loginAt: new Date().toISOString() };
+    sessionStorage.setItem("cc_admin", JSON.stringify(adminSession));
+    notice("adminLoginMsg","✅ Admin login successful.","ok");
+    await refreshAdminUI();
+  }catch(err){
+    notice("adminLoginMsg", err.message, "error");
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = "Login as Admin"; }
+  }
+});
+
+/* Admin logout */
+window.adminLogout = function(){
+  adminSession = null;
+  sessionStorage.removeItem("cc_admin");
+  $("adminLoginForm").reset();
+  notice("adminLoginMsg","Logged out of admin panel.");
+  refreshAdminUI();
+};
+
+/* Update admin credentials — replaces the single existing row */
+$("adminCredsForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const btn = e.target.querySelector("button[type=submit]");
+  try{
+    if(!adminSession) throw new Error("Admin login required.");
+    if(btn){ btn.disabled = true; btn.textContent = "Updating…"; }
+    const email = $("newAdminEmail").value.trim().toLowerCase();
+    const pass  = $("newAdminPassword").value;
+    if(pass.length < 6) throw new Error("Password must be at least 6 characters.");
+    const hash = await sha256(pass);
+
+    const { error: delErr } = await supabase.from(ADMIN_TABLE).delete().neq("email", "__never__");
+    if(delErr) throw delErr;
+
+    const { error } = await supabase.from(ADMIN_TABLE).insert({ email, password_hash: hash });
+    if(error) throw error;
+
+    adminSession = { email, loginAt: new Date().toISOString() };
+    sessionStorage.setItem("cc_admin", JSON.stringify(adminSession));
+    $("adminSessionInfo").textContent = `Signed in as ${email}`;
+    notice("adminCredsMsg","✅ Admin credentials updated. Only this email/password is now valid.","ok");
+    $("adminCredsForm").reset();
+  }catch(err){
+    notice("adminCredsMsg", err.message, "error");
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = "Update Admin Credentials"; }
+  }
+});
+
+/* Load all client submissions */
+async function adminLoadRequests(){
+  const box = $("adminRequestsList");
+  box.innerHTML = '<div class="empty">Loading requests…</div>';
+  try{
+    const { data, error } = await supabase
+      .from("requests")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if(error) throw error;
+    adminAllRequests = data || [];
+    $("adminReqCount").textContent = `${adminAllRequests.length} submission${adminAllRequests.length===1?"":"s"}`;
+    renderAdminRequests();
+  }catch(err){
+    box.innerHTML = `<div class="empty">Could not load requests: ${esc(err.message)}</div>`;
+  }
+}
+
+window.renderAdminRequests = function(){
+  const term = ($("adminSearch")?.value || "").toLowerCase();
+  const list = adminAllRequests.filter(r=>{
+    if(!term) return true;
+    return [r.user_name,r.user_email,r.phone,r.service,r.details,r.ref_no,r.status]
+      .filter(Boolean).some(v => String(v).toLowerCase().includes(term));
+  });
+  if(!list.length){
+    $("adminRequestsList").innerHTML = '<div class="empty">No matching submissions.</div>';
+    return;
+  }
+  $("adminRequestsList").innerHTML = `
+    <div style="overflow-x:auto">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Ref</th><th>Name</th><th>Email</th><th>Phone</th>
+          <th>Service</th><th>Details</th><th>File</th><th>Status</th><th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${list.map(r=>`
+          <tr>
+            <td>${esc(r.ref_no || "-")}</td>
+            <td>${esc(r.user_name || "-")}</td>
+            <td>${esc(r.user_email || "-")}</td>
+            <td>${esc(r.phone || "-")}</td>
+            <td>${esc(r.service || "-")}</td>
+            <td style="max-width:260px">${esc(r.details || "")}</td>
+            <td>${r.file_url ? `<a href="${esc(r.file_url)}" target="_blank" rel="noopener">📎 Open</a>` : "-"}</td>
+            <td><span class="status ${r.status==="pending"?"pending":r.status==="done"?"done":""}">${esc(r.status || "pending")}</span></td>
+            <td>${r.created_at ? new Date(r.created_at).toLocaleString() : "-"}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+    </div>`;
+};
+
+/* Load all registered clients */
+async function adminLoadProfiles(){
+  const box = $("adminProfilesList");
+  box.innerHTML = '<div class="empty">Loading clients…</div>';
+  try{
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if(error) throw error;
+    if(!data || !data.length){
+      box.innerHTML = '<div class="empty">No registered clients yet.</div>';
+      return;
+    }
+    box.innerHTML = `
+      <div style="overflow-x:auto">
+      <table class="admin-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th></tr></thead>
+        <tbody>
+          ${data.map(p=>`
+            <tr>
+              <td>${esc(p.name || "-")}</td>
+              <td>${esc(p.email || "-")}</td>
+              <td>${esc(p.phone || "-")}</td>
+              <td>${p.created_at ? new Date(p.created_at).toLocaleDateString() : "-"}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+      </div>`;
+  }catch(err){
+    box.innerHTML = `<div class="empty">Could not load clients: ${esc(err.message)}</div>`;
+  }
+}
+
+/* ==================== INIT ==================== */
+(async function init(){
+  $("year").textContent = new Date().getFullYear();
+  buildChips();
+  buildServiceSelect();
+  renderServices();
+
+  const { data } = await supabase.auth.getSession();
+  if(data?.session?.user) handleAuth(data.session.user);
+})();
+</script>
+</body>
+</html>
