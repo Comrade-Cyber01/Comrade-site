@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Comrade Cyber01 Alupe University</title>
+<link href="dist/images/alupeLogo.jpg" rel="icon"/>
+<link href="npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="dist/css/authentication_v_2.css" rel="stylesheet"/>
+<style>
+  .spinner-border-sm { width: 1rem; height: 1rem; border-width: 0.15em; }
+  .auth-error-msg { color: #dc3545; font-size: 13px; margin-top: 8px; display: block; min-height: 18px; }
+  .auth-success-msg { color: #198754; font-size: 13px; margin-top: 8px; display: block; min-height: 18px; }
+  .hidden { display: none !important; }
+  .password-rules { font-size: 11px; color: #666; margin-top: 5px; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="auth-wrapper">
+  
+  <div class="brand-panel">
+    <div class="brand-ring-inner"></div>
+    <div class="brand-logo-wrap">
+      <img alt="Comrade Cyber Logo" src="dist/images/alupeLogo.jpg"/>
+    </div>
+    <div class="brand-university-name">ALUPE UNIVERSITY COMRADE'S CYBER01</div>
+    <div class="brand-divider"></div>
+    <div class="brand-slogan">"Student Service Portal"</div>
+    <div class="brand-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-panel-header">
+      <h2 id="formTitle">Welcome Back</h2>
+      <p id="formSubtitle">Sign in to access your service portal</p>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="needs-validation" novalidate>
+      <div class="field-group">
+        <label class="form-label" for="email">Email Address</label>
+        <div class="input-icon-container">
+          <i class="bi bi-envelope input-icon"></i>
+          <input class="form-control" id="email" name="email" placeholder="Enter your email address" required type="email" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-icon-container">
+          <i class="bi bi-lock input-icon"></i>
+          <input class="form-control has-toggle" id="password" name="password" placeholder="Enter your password" required type="password"/>
+          <button aria-label="Show password" class="password-toggle" tabindex="-1" type="button">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <span id="loginError" class="auth-error-msg"></span>
+      <span id="loginSuccess" class="auth-success-msg"></span>
+
+      <button class="btn-auth" type="submit" id="loginBtn">
+        <span id="loginSpinner" class="spinner-border spinner-border-sm hidden" role="status" aria-hidden="true"></span>
+        <i class="bi bi-box-arrow-in-right" id="loginIcon"></i> <span id="loginText">Sign In</span>
+      </button>
+
+      <div class="form-links">
+        <a class="auth-link" href="#" id="showRegister">
+          <i class="bi bi-person-plus"></i> Create Account
+        </a>
+        <a class="auth-link" href="#" id="showForgot">
+          <i class="bi bi-question-circle"></i> Forgot Password?
+        </a>
+      </div>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="registerForm" class="needs-validation hidden" novalidate>
+      <div class="field-group">
+        <label class="form-label" for="regName">Full Name</label>
+        <div class="input-icon-container">
+          <i class="bi bi-person input-icon"></i>
+          <input class="form-control" id="regName" placeholder="Enter your full name" required type="text" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="form-label" for="regPhone">Phone Number</label>
+        <div class="input-icon-container">
+          <i class="bi bi-telephone input-icon"></i>
+          <input class="form-control" id="regPhone" placeholder="e.g. 0712345678" required type="tel" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="form-label" for="regEmail">Email Address</label>
+        <div class="input-icon-container">
+          <i class="bi bi-envelope input-icon"></i>
+          <input class="form-control" id="regEmail" placeholder="Enter your email" required type="email" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="form-label" for="regPassword">Password</label>
+        <div class="input-icon-container">
+          <i class="bi bi-lock input-icon"></i>
+          <input class="form-control has-toggle" id="regPassword" minlength="8" placeholder="Create a strong password" required type="password"/>
+          <button aria-label="Show password" class="password-toggle" tabindex="-1" type="button">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <div class="password-rules">
+          Must contain: 8+ characters, uppercase, lowercase, number, and special character (!@#$%^&*).
+        </div>
+      </div>
+
+      <span id="regError" class="auth-error-msg"></span>
+      <span id="regSuccess" class="auth-success-msg"></span>
+
+      <button class="btn-auth" type="submit" id="regBtn">
+        <span id="regSpinner" class="spinner-border spinner-border-sm hidden" role="status" aria-hidden="true"></span>
+        <i class="bi bi-person-plus" id="regIcon"></i> <span id="regText">Register</span>
+      </button>
+
+      <div class="form-links">
+        <a class="auth-link" href="#" id="showLogin">
+          <i class="bi bi-box-arrow-in-right"></i> Back to Login
+        </a>
+      </div>
+    </form>
+
+    <!-- FORGOT PASSWORD FORM -->
+    <form id="forgotForm" class="needs-validation hidden" novalidate>
+      <p style="font-size:14px; color:#666; margin-bottom:15px;">Enter your email address and we'll send you a link to reset your password.</p>
+      <div class="field-group">
+        <label class="form-label" for="forgotEmail">Email Address</label>
+        <div class="input-icon-container">
+          <i class="bi bi-envelope input-icon"></i>
+          <input class="form-control" id="forgotEmail" placeholder="Enter your email" required type="email" />
+        </div>
+      </div>
+
+      <span id="forgotError" class="auth-error-msg"></span>
+      <span id="forgotSuccess" class="auth-success-msg"></span>
+
+      <button class="btn-auth" type="submit" id="forgotBtn">
+        <span id="forgotSpinner" class="spinner-border spinner-border-sm hidden" role="status" aria-hidden="true"></span>
+        <i class="bi bi-envelope-paper" id="forgotIcon"></i> <span id="forgotText">Send Reset Link</span>
+      </button>
+
+      <div class="form-links">
+        <a class="auth-link" href="#" id="backToLoginFromForgot">
+          <i class="bi bi-arrow-left"></i> Back to Login
+        </a>
+      </div>
+    </form>
+
+    <!-- RESET PASSWORD FORM -->
+    <form id="resetPasswordForm" class="needs-validation hidden" novalidate>
+      <p style="font-size:14px; color:#666; margin-bottom:15px;">Enter your new password below.</p>
+      <div class="field-group">
+        <label class="form-label" for="newPassword">New Password</label>
+        <div class="input-icon-container">
+          <i class="bi bi-lock input-icon"></i>
+          <input class="form-control has-toggle" id="newPassword" minlength="8" placeholder="New strong password" required type="password"/>
+          <button aria-label="Show password" class="password-toggle" tabindex="-1" type="button">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <div class="password-rules">
+          Must contain: 8+ characters, uppercase, lowercase, number, and special character (!@#$%^&*).
+        </div>
+      </div>
+
+      <span id="resetError" class="auth-error-msg"></span>
+      <span id="resetSuccess" class="auth-success-msg"></span>
+
+      <button class="btn-auth" type="submit" id="resetBtn">
+        <span id="resetSpinner" class="spinner-border spinner-border-sm hidden" role="status" aria-hidden="true"></span>
+        <i class="bi bi-check-circle" id="resetIcon"></i> <span id="resetText">Update Password</span>
+      </button>
+    </form>
+
+    <div class="form-footer">
+      © 2026 Comrade Cyber01 Alupe University — Engineered by
+      <a href="https://appkings.co.ke/" target="_blank">Appkings Solutions</a>
+    </div>
+  </div>
+</div>
+
+<script src="npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+
+const SUPABASE_URL      = "https://vebfwxpacvzcnsflulrg.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_IFrnG1B_XQ_DW2EwlH2Qig_ocV1H6ft";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const forgotForm = document.getElementById('forgotForm');
+const resetPasswordForm = document.getElementById('resetPasswordForm');
+const formTitle = document.getElementById('formTitle');
+const formSubtitle = document.getElementById('formSubtitle');
+
+const showRegisterBtn = document.getElementById('showRegister');
+const showLoginBtn = document.getElementById('showLogin');
+const showForgotBtn = document.getElementById('showForgot');
+const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+function showForm(formToShow, title, subtitle) {
+  loginForm.classList.add('hidden');
+  registerForm.classList.add('hidden');
+  forgotForm.classList.add('hidden');
+  resetPasswordForm.classList.add('hidden');
+  formToShow.classList.remove('hidden');
+  formTitle.textContent = title;
+  formSubtitle.textContent = subtitle;
+  document.querySelectorAll('.auth-error-msg, .auth-success-msg').forEach(el => el.textContent = '');
+}
+
+showRegisterBtn.addEventListener('click', (e) => { e.preventDefault(); showForm(registerForm, "Create Account", "Join the service portal"); });
+showLoginBtn.addEventListener('click', (e) => { e.preventDefault(); showForm(loginForm, "Welcome Back", "Sign in to access your service portal"); });
+showForgotBtn.addEventListener('click', (e) => { e.preventDefault(); showForm(forgotForm, "Reset Password", "We'll email you a recovery link"); });
+backToLoginFromForgot.addEventListener('click', (e) => { e.preventDefault(); showForm(loginForm, "Welcome Back", "Sign in to access your service portal"); });
+
+document.querySelectorAll('.password-toggle').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    const container = btn.closest('.input-icon-container');
+    const input = container ? container.querySelector('input') : null;
+    if (!input) return;
+    const reveal = input.type === 'password';
+    input.type = reveal ? 'text' : 'password';
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = reveal ? 'bi bi-eye-slash' : 'bi bi-eye';
+    btn.setAttribute('aria-label', reveal ? 'Hide password' : 'Show password');
+  });
+});
+
+function setLoading(btnId, spinnerId, iconId, textId, loading, defaultText) {
+  const btn = document.getElementById(btnId);
+  const spinner = document.getElementById(spinnerId);
+  const icon = document.getElementById(iconId);
+  const text = document.getElementById(textId);
+  if (loading) {
+    btn.disabled = true;
+    spinner.classList.remove('hidden');
+    icon.classList.add('hidden');
+    text.textContent = 'Please wait...';
+  } else {
+    btn.disabled = false;
+    spinner.classList.add('hidden');
+    icon.classList.remove('hidden');
+    text.textContent = defaultText;
+  }
+}
+
+/* LOGIN → redirects to client.html on success */
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errorEl = document.getElementById('loginError');
+  const successEl = document.getElementById('loginSuccess');
+
+  if (!email || !password) { errorEl.textContent = "Please fill in all fields."; return; }
+
+  setLoading('loginBtn', 'loginSpinner', 'loginIcon', 'loginText', true);
+  errorEl.textContent = '';
+  successEl.textContent = '';
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    setLoading('loginBtn', 'loginSpinner', 'loginIcon', 'loginText', false, 'Sign In');
+  } else {
+    successEl.textContent = "Login successful! Redirecting...";
+    setTimeout(() => { window.location.href = "client.html"; }, 1000);
+  }
+});
+
+/* REGISTER */
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errorEl = document.getElementById('regError');
+  const successEl = document.getElementById('regSuccess');
+
+  if (!name || !phone || !email || !password) { errorEl.textContent = "Please fill in all fields."; return; }
+  if (!passwordRegex.test(password)) {
+    errorEl.textContent = "Password must be 8+ characters and include uppercase, lowercase, number, and special character.";
+    return;
+  }
+
+  setLoading('regBtn', 'regSpinner', 'regIcon', 'regText', true);
+  errorEl.textContent = '';
+  successEl.textContent = '';
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { name, phone } }
+  });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    setLoading('regBtn', 'regSpinner', 'regIcon', 'regText', false, 'Register');
+  } else {
+    successEl.textContent = "Registration successful! You can now log in.";
+    setLoading('regBtn', 'regSpinner', 'regIcon', 'regText', false, 'Register');
+    registerForm.reset();
+    setTimeout(() => showForm(loginForm, "Welcome Back", "Sign in to access your service portal"), 2000);
+  }
+});
+
+/* FORGOT */
+forgotForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('forgotEmail').value.trim();
+  const errorEl = document.getElementById('forgotError');
+  const successEl = document.getElementById('forgotSuccess');
+
+  if (!email) { errorEl.textContent = "Please enter your email address."; return; }
+
+  setLoading('forgotBtn', 'forgotSpinner', 'forgotIcon', 'forgotText', true);
+  errorEl.textContent = '';
+  successEl.textContent = '';
+
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.href
+  });
+
+  if (error) {
+    errorEl.textContent = error.message;
+  } else {
+    successEl.textContent = "Check your email for the password reset link.";
+    forgotForm.reset();
+  }
+  setLoading('forgotBtn', 'forgotSpinner', 'forgotIcon', 'forgotText', false, 'Send Reset Link');
+});
+
+/* RESET */
+if (window.location.hash && window.location.hash.includes("access_token")) {
+  showForm(resetPasswordForm, "New Password", "Create a new strong password");
+}
+
+resetPasswordForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const newPassword = document.getElementById('newPassword').value;
+  const errorEl = document.getElementById('resetError');
+  const successEl = document.getElementById('resetSuccess');
+
+  if (!newPassword) { errorEl.textContent = "Please enter a new password."; return; }
+  if (!passwordRegex.test(newPassword)) {
+    errorEl.textContent = "Password must be 8+ characters and include uppercase, lowercase, number, and special character.";
+    return;
+  }
+
+  setLoading('resetBtn', 'resetSpinner', 'resetIcon', 'resetText', true);
+  errorEl.textContent = '';
+  successEl.textContent = '';
+
+  const { data, error } = await supabase.auth.updateUser({ password: newPassword });
+
+  if (error) {
+    errorEl.textContent = error.message;
+    setLoading('resetBtn', 'resetSpinner', 'resetIcon', 'resetText', false, 'Update Password');
+  } else {
+    successEl.textContent = "Password updated successfully! Redirecting to login...";
+    setTimeout(() => {
+      window.location.hash = "";
+      window.location.href = "login.html";
+    }, 2000);
+  }
+});
+</script>
+</body>
+</html>
