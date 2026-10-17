@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: comrade-cyber-backend
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_TO
+        value: corneliusotwori5@gmail.com
+      - key: MAIL_FROM
+        value: onboarding@resend.dev
+      - key: NODE_VERSION
+        value: "18"
